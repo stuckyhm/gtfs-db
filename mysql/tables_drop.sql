@@ -1,0 +1,13 @@
+DROP TABLE IF EXISTS `agency`;
+DROP TABLE IF EXISTS `calendar`;
+DROP TABLE IF EXISTS `calendar_dates`;
+DROP TABLE IF EXISTS `fare_attributes`;
+DROP TABLE IF EXISTS `fare_rules`;
+DROP TABLE IF EXISTS `feed_info`;
+DROP TABLE IF EXISTS `frequencies`;
+DROP TABLE IF EXISTS `routes`;
+DROP TABLE IF EXISTS `shapes`;
+DROP TABLE IF EXISTS `stops`;
+DROP TABLE IF EXISTS `stop_times`;
+DROP TABLE IF EXISTS `transfers`;
+DROP TABLE IF EXISTS `trips`;
