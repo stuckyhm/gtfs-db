@@ -1,0 +1,13 @@
+TRUNCATE TABLE `agency`;
+TRUNCATE TABLE `calendar`;
+TRUNCATE TABLE `calendar_dates`;
+TRUNCATE TABLE `fare_attributes`;
+TRUNCATE TABLE `fare_rules`;
+TRUNCATE TABLE `feed_info`;
+TRUNCATE TABLE `frequencies`;
+TRUNCATE TABLE `routes`;
+TRUNCATE TABLE `shapes`;
+TRUNCATE TABLE `stops`;
+TRUNCATE TABLE `stop_times`;
+TRUNCATE TABLE `transfers`;
+TRUNCATE TABLE `trips`;
