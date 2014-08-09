@@ -21,7 +21,11 @@ clean_up () {
 	[ "${TEMPFILE}" != "" ] && test -f ${TEMPFILE} && rm ${TEMPFILE}
 	[ "${AUTO_CREDFILE}" = "Y" ] && [ "${CREDFILE}" != "" ] && test -f ${CREDFILE} && rm ${CREDFILE}
 
-	echo "EXIT(${ARG})"
+	if [ ${ARG} -eq 0 ]; then
+		echo "EXIT(${ARG})" 
+	else
+		echo "EXIT(${ARG})" >&2
+	fi
 
 	exit $ARG
 }
@@ -74,13 +78,13 @@ while getopts ":h:u:p:d:f:twc:" opt; do
 done
 
 if [ "${MYSQL_DB}" == "" ]; then
-	echo "Missing Option: -d database" 
+	echo "Missing Option: -d database" >&2
 	display_help
 	exit 1
 fi
 
 if [ "${FEED_DIR}" == "" ]; then
-	echo "Missing Option: -f feed" 
+	echo "Missing Option: -f feed" >&2
 	display_help
 	exit 1
 fi
@@ -128,20 +132,20 @@ for TABLE in $TABLES; do
 		RC=$?
 
 		if [ "${SHOW_WARNINGS}" = "Y" ]; then
-			grep "Warning " ${TEMPFILE}
+			grep "Warning " ${TEMPFILE} >&2
 		fi
 		grep "Records" ${TEMPFILE}
 
 		if [ $RC -eq 0 ]; then
 			echo "Loading file ${TABLE}.txt finished."
 		else
-			echo "Loading file ${TABLE}.txt failed."
+			echo "Loading file ${TABLE}.txt failed." >&2
 			exit 2
 		fi
 
 		rm ${TEMPFILE}
 	else
-		echo "Ignoring missing file ${TABLE}.txt."
+		echo "Ignoring missing file ${TABLE}.txt." >&2
 	fi
 	echo ""
 done
