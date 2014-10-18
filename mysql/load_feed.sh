@@ -11,7 +11,7 @@ display_help() {
 		  -h hostname                Connect to host.
 		  -u username                User for login if not current user.
 		  -p password                Password to use when connecting to server.
-		  -t                         Truncate tables bevor loading.
+		  -t                         Truncate tables befor loading.
 		  -w                         Show warnings.
 
 	EOF
