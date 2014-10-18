@@ -4,13 +4,15 @@ display_help() {
 	cat <<-EOF >&2
 		Usage: $0 [option...]
 
+		  -c file                    Read extra default options from the given file.
 		  -?                         Display this help and exit.
 		  -d database                Databasename to import to.
 		  -f feed                    Directory with unzipped GTFS-Feed.
 		  -h hostname                Connect to host.
 		  -u username                User for login if not current user.
 		  -p password                Password to use when connecting to server.
-		  -c file                    Read extra default options from the given file.
+		  -t                         Truncate tables bevor loading.
+		  -w                         Show warnings.
 
 	EOF
 }
