@@ -4,4 +4,4 @@ Some basic tools for working with google's [General Transit Feed Specification](
 
 ## MySql ##
 
-see in [mysqla](mysql)
+see in [mysql](mysql)
