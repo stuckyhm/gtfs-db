@@ -39,7 +39,7 @@ Usage: ./load_feed.sh [option...]
   -u username                User for login if not current user.
   -p password                Password to use when connecting to server.
   -t "agency,stops"          Load only these tables
-  -T                         Truncate tables befor loading.
+  -T                         Truncate tables before loading.
   -w                         Show warnings.
 ```
 
@@ -50,7 +50,7 @@ $ ls ../nyc-gtfs
 agency.txt		calendar_dates.txt	shapes.txt		stops.txt		trips.txt
 calendar.txt		routes.txt		stop_times.txt		transfers.txt
 $ ./load_feed.sh -h 127.0.0.1 -u root -p Asdf1234 -d gtfs -f ../nyc-gtfs
-All tables will truncated befor loading.
+All tables will truncated before loading.
 Start loading file agency.txt with 2 lines.
 Records: 1  Deleted: 0  Skipped: 0  Warnings: 0
 Loading file agency.txt finished.

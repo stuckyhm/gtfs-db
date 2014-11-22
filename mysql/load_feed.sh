@@ -12,7 +12,7 @@ display_help() {
 		  -u username                User for login if not current user.
 		  -p password                Password to use when connecting to server.
 		  -t "agency,stops"          Load only these tables
-		  -T                         Truncate tables befor loading.
+		  -T                         Truncate tables before loading.
 		  -w                         Show warnings.
 
 	EOF
@@ -108,7 +108,7 @@ if [ "${AUTO_CREDFILE}" = "Y" ]; then
 fi
 
 if [ "${TRUNCATE}" = "Y" ]; then
-	echo "All tables will truncated befor loading."
+	echo "All tables will truncated before loading."
 fi
 
 for TABLE in $TABLES; do
