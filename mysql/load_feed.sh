@@ -11,7 +11,8 @@ display_help() {
 		  -h hostname                Connect to host.
 		  -u username                User for login if not current user.
 		  -p password                Password to use when connecting to server.
-		  -t                         Truncate tables befor loading.
+		  -t "agency,stops"          Load only these tables
+		  -T                         Truncate tables befor loading.
 		  -w                         Show warnings.
 
 	EOF
@@ -39,7 +40,7 @@ AUTO_CREDFILE="Y"
 TABLES="agency calendar calendar_dates fare_attributes fare_rules frequencies routes shapes stop_times stops transfers trips"
 MYSQL_ARGS="--local-infile=1 -vv"
 
-while getopts ":h:u:p:d:f:twc:" opt; do
+while getopts ":h:u:p:d:f:t:Twc:" opt; do
 	case $opt in
 		h)
 			MYSQL_HOST=${OPTARG}
@@ -56,8 +57,11 @@ while getopts ":h:u:p:d:f:twc:" opt; do
 		f)
 			FEED_DIR=${OPTARG}
 			;;
-		t)
+		T)
 			TRUNCATE="Y"
+			;;
+		t)
+			TABLES=${OPTARG}
 			;;
 		w)
 			SHOW_WARNINGS="Y"
@@ -104,7 +108,7 @@ if [ "${AUTO_CREDFILE}" = "Y" ]; then
 fi
 
 if [ "${TRUNCATE}" = "Y" ]; then
-	echo "All tables will truncated bevor loading."
+	echo "All tables will truncated befor loading."
 fi
 
 for TABLE in $TABLES; do
@@ -126,6 +130,7 @@ for TABLE in $TABLES; do
 			INTO TABLE ${TABLE} 
 			FIELDS TERMINATED BY ',' 
 			OPTIONALLY ENCLOSED BY '"' 
+			LINES TERMINATED BY '\r\n'
 			IGNORE 1 LINES
 			(
 				${COLUMNS}
