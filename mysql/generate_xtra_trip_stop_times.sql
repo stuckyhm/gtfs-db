@@ -35,3 +35,35 @@ LEFT JOIN stops AS s
 ON s.stop_id = st.stop_id
 WHERE date(addtime(sd.date, st.arrival_time)) BETWEEN curdate() AND date_add(curdate(), interval 2 DAY)
   OR date(addtime(sd.date, st.departure_time)) BETWEEN curdate() AND date_add(curdate(), interval 2 DAY);
+
+
+DROP EVENT IF EXISTS `update_trip_stop_times_daily`;
+DELIMITER $$
+CREATE EVENT update_trip_stop_times_daily
+    ON SCHEDULE
+        EVERY 1 DAY
+    DO
+        BEGIN
+            INSERT IGNORE INTO `xtra_trip_stop_times`
+            SELECT t.trip_id,
+                   st.stop_id,
+                   IFNULL(s.stop_timezone, a.agency_timezone),
+                   convert_tz(addtime(sd.date, st.arrival_time), a.agency_timezone, '+00:00') AS arrival,
+                   convert_tz(addtime(sd.date, st.departure_time), a.agency_timezone, '+00:00') AS departure
+            FROM trips AS t
+            LEFT JOIN routes AS r
+            ON r.route_id = t.route_id
+            LEFT JOIN agency AS a
+            ON a.agency_id = r.agency_id
+            LEFT JOIN xtra_service_dates AS sd 
+            ON sd.service_id = t.service_id
+            LEFT JOIN stop_times AS st 
+            ON st.trip_id = t.trip_id
+            LEFT JOIN stops AS s
+            ON s.stop_id = st.stop_id
+            WHERE date(addtime(sd.date, st.arrival_time)) = date_add(curdate(), interval 2 DAY)
+                OR date(addtime(sd.date, st.departure_time)) = date_add(curdate(), interval 2 DAY);
+        
+            DELETE FROM `xtra_trip_stop_times` WHERE departure_utc < date_add(curdate(), interval -2 DAY);
+        END $$
+DELIMITER ;
