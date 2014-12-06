@@ -5,7 +5,8 @@ CREATE TABLE IF NOT EXISTS `xtra_service_dates` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 ALTER TABLE `xtra_service_dates`
- ADD PRIMARY KEY (`date`,`service_id`);
+ ADD PRIMARY KEY (`date`,`service_id`),
+ ADD INDEX(`service_id`);;
 
 
 INSERT INTO `xtra_service_dates` 
