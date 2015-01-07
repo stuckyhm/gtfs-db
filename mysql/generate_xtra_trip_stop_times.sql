@@ -42,6 +42,7 @@ DELIMITER $$
 CREATE EVENT update_trip_stop_times_daily
     ON SCHEDULE
         EVERY 1 DAY
+    STARTS '2015-01-07 23:50:00'
     DO
         BEGIN
             INSERT IGNORE INTO `xtra_trip_stop_times`
@@ -67,3 +68,5 @@ CREATE EVENT update_trip_stop_times_daily
             DELETE FROM `xtra_trip_stop_times` WHERE departure_utc < date_add(curdate(), interval -2 DAY);
         END $$
 DELIMITER ;
+
+SET GLOBAL event_scheduler = ON;
