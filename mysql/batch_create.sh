@@ -21,4 +21,5 @@ ${MYSQL} ${MYSQL_DB} < generate_xtra_dates.sql
 ${MYSQL} ${MYSQL_DB} < generate_xtra_service_dates.sql
 ${MYSQL} ${MYSQL_DB} < generate_xtra_trips_extended.sql
 ${MYSQL} ${MYSQL_DB} < generate_xtra_trip_stop_times.sql
+${MYSQL} ${MYSQL_DB} < generate_xtra_stop_routes.sql
 
