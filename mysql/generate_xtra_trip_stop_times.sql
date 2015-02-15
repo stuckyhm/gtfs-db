@@ -1,9 +1,8 @@
-SET tmp_table_size = 1024 * 1024 * 1024 * 2;
-SET max_heap_table_size = 1024 * 1024 * 1024 * 2;
-
 DROP TABLE IF EXISTS `xtra_trip_stop_times`;
 CREATE TABLE IF NOT EXISTS `xtra_trip_stop_times` (
   `trip_id` varchar(255) NOT NULL,
+  `operating_date` date NOT NULL,
+  `stop_sequence` int(11) NOT NULL,
   `stop_id` varchar(255) NOT NULL,
   `timezone` varchar(255) NOT NULL,
   `arrival_utc` datetime NOT NULL,
@@ -11,13 +10,16 @@ CREATE TABLE IF NOT EXISTS `xtra_trip_stop_times` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 ALTER TABLE `xtra_trip_stop_times`
- ADD PRIMARY KEY (`trip_id`, `stop_id`, `arrival_utc`, `departure_utc`),
+ ADD PRIMARY KEY (`trip_id`, `operating_date`, `stop_sequence`),
+ ADD INDEX `time` (`arrival_utc`, `departure_utc`),
  ADD INDEX `stop` (`stop_id`),
  ADD INDEX `departure_stop` (`departure_utc`, `stop_id`);
 
 
 INSERT INTO `xtra_trip_stop_times`
 SELECT t.trip_id,
+       sd.date,
+       st.stop_sequence,
        st.stop_id,
        IFNULL(s.stop_timezone, a.agency_timezone),
        convert_tz(addtime(sd.date, st.arrival_time), a.agency_timezone, '+00:00') AS arrival,
@@ -47,6 +49,8 @@ CREATE EVENT update_trip_stop_times_daily
         BEGIN
             INSERT IGNORE INTO `xtra_trip_stop_times`
             SELECT t.trip_id,
+                   sd.date,
+                   st.stop_sequence,
                    st.stop_id,
                    IFNULL(s.stop_timezone, a.agency_timezone),
                    convert_tz(addtime(sd.date, st.arrival_time), a.agency_timezone, '+00:00') AS arrival,
