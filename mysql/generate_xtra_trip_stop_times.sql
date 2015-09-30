@@ -1,16 +1,16 @@
 DROP TABLE IF EXISTS `xtra_trip_stop_times`;
 CREATE TABLE IF NOT EXISTS `xtra_trip_stop_times` (
   `trip_id` varchar(255) NOT NULL,
-  `operating_date` date NOT NULL,
+  `service_date` date NOT NULL,
   `stop_sequence` int(11) NOT NULL,
   `stop_id` varchar(255) NOT NULL,
-  `timezone` varchar(255) NOT NULL,
-  `arrival_utc` datetime NOT NULL,
-  `departure_utc` datetime NOT NULL
+  `timezone` varchar(255) NULL,
+  `arrival_utc` datetime NULL,
+  `departure_utc` datetime NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 ALTER TABLE `xtra_trip_stop_times`
- ADD PRIMARY KEY (`trip_id`, `operating_date`, `stop_sequence`),
+ ADD PRIMARY KEY (`trip_id`, `service_date`, `stop_sequence`),
  ADD INDEX `time` (`arrival_utc`, `departure_utc`),
  ADD INDEX `stop` (`stop_id`),
  ADD INDEX `departure_stop` (`departure_utc`, `stop_id`);
